@@ -88,3 +88,23 @@ const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || n
                 audio :false 
             }
         ```
+
+* 实现调用设备
+
+```js
+const videoPlayer = document.querySelector('#player');
+const constraints = {
+    video: true,
+    // audio: true
+};
+if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    console.log('设备不支持');
+} else {
+    navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+        //获取流
+        videoPlayer.srcObject = stream;
+    }).catch((err) => {
+        console.log('err: ', err);
+    })
+}
+```
