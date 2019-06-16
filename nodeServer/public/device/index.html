@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WebRTC获取设备</title>
+</head>
+
+<body>
+    <div>
+        <label for="audioinput">audio input device</label>
+        <select name="" id="audioinput"></select>
+    </div>
+    <div>
+        <label for="audioOutput">audio output device</label>
+        <select name="" id="audiooutput"></select>
+    </div>
+    <div>
+        <label for="videoinput">video input device</label>
+        <select name="" id="videoinput"></select>
+    </div>
+    <script src="http://cdn.temasys.io/adapterjs/0.15.x/adapter.min.js"></script>
+    <script>
+        const audioinput = document.querySelector('#audioinput');
+        const audiooutput = document.querySelector('#audiooutput');
+        const videoinput = document.querySelector('#videoinput');
+
+        console.log(navigator.mediaDevices);
+        //判断是否有设备
+        if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+            console.log('enumerateDevices is not supported');
+        } else {
+            // 获取设备枚举
+            navigator.mediaDevices.enumerateDevices().then((res) => {
+                console.log('res: ', res);
+                res.map((item) => {
+                    const option = document.createElement('option');
+                    option.text = item.label;
+                    option.value = item.deviceId;
+                    if (item.kind == 'audioinput') {
+                        audioinput.appendChild(option);
+
+                    } else if (item.kind == 'audiooutput') {
+                        audiooutput.appendChild(option);
+                    } else if (item.kind == 'videoinput') {
+                        videoinput.appendChild(option);
+                    }
+                })
+            }).catch((err) => {
+                console.log('err', err);
+            })
+        }
+    </script>
+</body>
+
+</html>

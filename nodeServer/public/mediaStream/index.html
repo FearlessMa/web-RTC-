@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>web RTC 视频</title>
+</head>
+
+<body>
+    <video autoplay playsinline id='player' width="1000px" height="800px"></video>
+    <!-- <button onclick='btnClick()'>停止</button> -->
+    <script>
+        const videoPlayer = document.querySelector('#player');
+        const constraints = {
+            video: true,
+            // audio: true
+        };
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            console.log('设备不支持');
+        } else {
+            navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+                //获取流
+                videoPlayer.srcObject = stream;
+            }).catch((err) => {
+                console.log('err: ', err);
+            })
+        }
+        // function btnClick() {
+        //     constraints.video = !constraints.video;
+        //     console.log('constraints: ', constraints);
+        // }
+    </script>
+</body>
+
+</html>
